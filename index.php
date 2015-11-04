@@ -19,13 +19,13 @@
 </div> </div> 
 
 //Email Address
-<div class="form-group>
+<div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
 <div class="col-sm-10">
 <input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
 </div> </div>
 
-<div class="form-group>
+<div class="form-group">
 <label for="phone" class="col-sm-2 control-label"> Your Telephone number </label>
 <div class="col-sm-10">
 <input type="text" class="form-control" id="phone" name="phone" placeholder="User's Phone number" />
@@ -46,7 +46,7 @@
 Enter The User's Email for the gallery to browse: 
 
 //Email Address
-<div class="form-group>
+<div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
 <div class="col-sm-10">
 <input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
