@@ -25,7 +25,6 @@
 <input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
 </div> </div>
 
-//Phone number
 <div class="form-group>
 <label for="phone" class="col-sm-2 control-label"> Your Telephone number </label>
 <div class="col-sm-10">
