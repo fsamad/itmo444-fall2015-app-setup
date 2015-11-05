@@ -33,7 +33,7 @@
 
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offser-2" style="margin-left"360px">
+<div class="col-sm-10 col-sm-offser-2" style="margin-left:360px">
 <input type="submit" id="submit" name="submit" value="Send File" class="btn btn-primary"/>
 </div> </div> 
 
@@ -53,7 +53,7 @@ Enter The User's Email for the gallery to browse:
 </div> </div>
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offser-2" style="margin-left"360px">
+<div class="col-sm-10 col-sm-offser-2" style="margin-left:360px">
 <input type="submit" id="submit" name="submit" value="Load Gallery" class="btn btn-primary"/>
 </div> </div>
 
