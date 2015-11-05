@@ -8,10 +8,17 @@
 </head>
 <body>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px">
+<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px; width:500px; margin-left:450px">
 <h1 style="color: maroon" align = 'center'> Form </h1>
-
+<hr> 
 <form enctype="multipart/form-data" action="result.php" method="POST">
+
+<div class="form-group">
+<label for="file" class="col-sm-2 control-label" > Send this file: </label>
+<div class="col-sm-10">
+<input type="file" class="form-control" id="file" name="file" />
+
+
 
 <div class="form-group">
 <label for="name" class="col-sm-2 control-label" > Your name: </label>
@@ -22,7 +29,7 @@
 <div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
+<input type="email" class="form-control" id="email" name="email" placeholder="user's Email Address" />
 </div> </div>
 
 <div class="form-group">
@@ -41,7 +48,7 @@
 </div>
 </form>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px">
+<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px; margin-left:450p">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
 <h2>Enter The User's Email for the gallery to browse:</h2> 
 
@@ -52,7 +59,7 @@
 </div> </div>
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offser-2" style="margin-left:360px">
+<div class="col-sm-10 col-sm-offser-2">
 <input type="submit" id="submit" name="submit" value="Load Gallery" class="btn btn-primary"/>
 </br> </br>
 </div> </div>
