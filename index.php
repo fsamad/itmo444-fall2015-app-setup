@@ -1,8 +1,4 @@
-#!/usr/bin/env php
-
-<?php session_start(); ?>
-<html>
-<head>
+#!/d>
 <title> HELLO </title>
 </head>
 <body>
@@ -44,9 +40,8 @@
 
 <div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
-<h1>Enter The User's Email for the gallery to browse:</h1> 
+<h2>Enter The User's Email for the gallery to browse:</h2> 
 
-//Email Address
 <div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
 <div class="col-sm-10">
@@ -59,7 +54,8 @@
 </div> </div>
 
 
-
 </form>
 </body>
 </html>
+
+
