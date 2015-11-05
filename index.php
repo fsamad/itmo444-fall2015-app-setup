@@ -48,7 +48,7 @@
 </div>
 </form>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px; margin-left:450px">
+<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
 <h2>Enter The User's Email for the gallery to browse:</h2> 
 <hr>
