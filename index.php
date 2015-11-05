@@ -1,9 +1,4 @@
-
-<?php
-//starting the session
- session_start();
- ?>
-
+<?php session_start(); ?>
 <html>
 <head>
 <title> HELLO </title>
