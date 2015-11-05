@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#!/bin/env php
 
 <?php session_start(); ?>
 <html>
