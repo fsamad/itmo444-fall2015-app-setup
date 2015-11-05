@@ -41,7 +41,7 @@
 </div>
 </form>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width: 25px>
+<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width: 25px">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
 Enter The User's Email for the gallery to browse: 
 
