@@ -8,7 +8,7 @@
 <div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px">
 <h1 style="color: maroon" align = 'center'> Form </h1>
 
-<form enctype="multipart/form-data" action="result.php method="POST">
+<form enctype="multipart/form-data" action="result.php" method="POST">
 
 //User's Name
 <div class="form-group">
