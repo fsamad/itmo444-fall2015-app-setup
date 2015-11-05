@@ -40,7 +40,7 @@
 
 
 <div class="form-group">
-<div class="col-sm-10 col-sm-offser-2" style="margin-left:360px">
+<div class="col-sm-10 col-sm-offser-2">
 <input type="submit" id="submit" name="submit" value="Send File" class="btn btn-primary"/>
 </br> </br>
 </div> </div> 
@@ -48,10 +48,10 @@
 </div>
 </form>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px; margin-left:450p">
+<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px; margin-left:450px">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
 <h2>Enter The User's Email for the gallery to browse:</h2> 
-
+<hr>
 <div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
 <div class="col-sm-10">
