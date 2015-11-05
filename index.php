@@ -37,7 +37,7 @@
 <div class="col-sm-10">
 <input type="text" class="form-control" id="phone" name="phone" placeholder="User's Phone number" />
 </div> </div> 
-
+</br> </br>
 
 <div class="form-group">
 <div class="col-sm-10 col-sm-offser-2">
@@ -45,12 +45,14 @@
 </br> </br>
 </div> </div> 
 
+</div> 
+</div>
 </div>
 </form>
 
 <div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px">
 <form enctype="mutlipart/form-data" action="gallery.php" method="POST">
-<h2>Enter The User's Email for the gallery to browse:</h2> 
+<h2 style="color: maroon" align = 'center'>Enter The User's Email for the gallery to browse:</h2> 
 <hr>
 <div class="form-group">
 <label for="email" class="col-sm-2 control-label"> Your Email: </label>
@@ -58,6 +60,7 @@
 <input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
 </div> </div>
 
+</br> </br>
 <div class="form-group">
 <div class="col-sm-10 col-sm-offser-2">
 <input type="submit" id="submit" name="submit" value="Load Gallery" class="btn btn-primary"/>
