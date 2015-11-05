@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+
+<?php
+//starting the session
+ session_start();
+ ?>
 
 <html>
 <head>
