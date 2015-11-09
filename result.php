@@ -6,7 +6,7 @@ session_start();
 // of $_FILES
 
 
-echo $_POST['useremail'];
+echo $_POST['email'];
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
 echo '<pre>';
@@ -23,13 +23,12 @@ $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-$bucket = uniqid("php-malhoura-",false);
+$bucket = uniqid("php-fabdelsa-",false);
 # AWS PHP SDK version 3 create bucket
 $result = $s3->createBucket([
     'ACL' => 'public-read',
     'Bucket' => $bucket
 ]);
-# PHP version 3
 $result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
@@ -53,18 +52,22 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
+
+else {
+echo "Success";
+}
 /* Prepared statement, stage 1: prepare */
 if (!($stmt = $link->prepare("INSERT INTO items (id,username, useremail,telephone,filename,s3rawurl,s3finishedurl,status,date) VALUES (NULL,?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
-$username = $_POST['username'];
-$useremail = $_POST['useremail'];
-$telephone = $_POST['telephone'];
+$uname = $_POST['uname'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
 $s3rawurl = $url; //  $result['ObjectURL']; from above
-$filename = basename($_FILES['userfile']['name']);
+$jpgfilename = basename($_FILES['userfile']['name']);
 $s3finishedurl = "none";
-$status =0;
-$date='2009-04-30 10:09:00';
+$state =0;
+$date=0;
 $stmt->bind_param("ssssssis",$username,$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$date);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -76,7 +79,7 @@ $link->real_query("SELECT * FROM items");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
-    echo $row['id'] . " " . $row['username'] . " " . $row['useremail']. " " . $row['telephone'];
+    echo $row['id'] . " " . $row['uname'] . " " . $row['email']. " " . $row['phone'];
 }
 $link->close();
 //add code to detect if subscribed to SNS topic 
