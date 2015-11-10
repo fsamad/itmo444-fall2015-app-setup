@@ -2,6 +2,8 @@
 
 //Starting the session 
 session_start();
+// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
+// of $_FILES
 
 
 echo $_POST['email'];
@@ -30,8 +32,7 @@ $result = $s3->createBucket([
 $result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
-   'Key' => $uploadfile, 
-'SourceFile' => $uploadfile
+   'Key' => $uploadfile
 ]);  
 $url = $result['ObjectURL'];
 echo $url;
@@ -51,19 +52,14 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-
-else {
-echo "Success";
-}
-/* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO Table (name, email,phone,file,s3rawurl,s3finishedurl,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO items (name, email,phone,file,s3rawurl,s3finishedurl,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
-$file = basename($_FILES['file']['name']);
 $s3rawurl = $url; //  $result['ObjectURL']; from above
+$file = basename($_FILES['file']['name']);
 $s3finishedurl = "none";
 $state =0;
 $datetime=0;
@@ -74,7 +70,7 @@ if (!$stmt->execute()) {
 printf("%d Row inserted.\n", $stmt->affected_rows);
 /* explicit close recommended */
 $stmt->close();
-$link->real_query("SELECT * FROM Tbale");
+$link->real_query("SELECT * FROM Table");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
