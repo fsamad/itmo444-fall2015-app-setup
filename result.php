@@ -2,8 +2,6 @@
 
 //Starting the session 
 session_start();
-// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
-// of $_FILES
 
 
 echo $_POST['email'];
@@ -32,7 +30,8 @@ $result = $s3->createBucket([
 $result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
-   'Key' => $uploadfile
+   'Key' => $uploadfile, 
+'SourceFile' => $uploadfile
 ]);  
 $url = $result['ObjectURL'];
 echo $url;
@@ -57,7 +56,7 @@ else {
 echo "Success";
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO items (id,username, useremail,telephone,filename,s3rawurl,s3finishedurl,status,date) VALUES (NULL,?,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO Table (uname, email,phone,jpgfilename,s3rawurl,s3finishedurl,state,date) VALUES (?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $uname = $_POST['uname'];
@@ -68,22 +67,18 @@ $jpgfilename = basename($_FILES['userfile']['name']);
 $s3finishedurl = "none";
 $state =0;
 $date=0;
-$stmt->bind_param("ssssssis",$username,$email,$phone,$filename,$s3rawurl,$s3finishedurl,$status,$date);
+$stmt->bind_param("ssssssis",$uname,$email,$phone,$jpgfilename,$s3rawurl,$s3finishedurl,$state,$date);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 printf("%d Row inserted.\n", $stmt->affected_rows);
 /* explicit close recommended */
 $stmt->close();
-$link->real_query("SELECT * FROM items");
+$link->real_query("SELECT * FROM Tbale");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
     echo $row['id'] . " " . $row['uname'] . " " . $row['email']. " " . $row['phone'];
 }
 $link->close();
-//add code to detect if subscribed to SNS topic 
-//if not subscribed then subscribe the user and UPDATE the column in the database with a new value 0 to 1 so that then each time you don't have to resubscribe them
-// add code to generate SQS Message with a value of the ID returned from the most recent inserted piece of work
-//  Add code to update database to UPDATE status column to 1 (in progress)
 ?>
