@@ -34,7 +34,7 @@
 <div class="form-group">
 <label for="phone" class="col-sm-2 control-label"> Your Telephone number </label>
 <div class="col-sm-10">
-<input type="text" class="form-control" id="phone" name="phone" placeholder="User's Phone number" />
+<input type="phone" class="form-control" id="phone" name="phone" placeholder="User's Phone number" />
 </div> </div> 
 </br> </br>
 
