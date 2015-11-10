@@ -23,4 +23,24 @@ $result = $rds->describeDBInstances(array(
 
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 echo"============\n". $endpoint . "===============";
+$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah");
+if (mysqli_connect_errno()) {
+printf("Connection faild: %s\n", mysqli_connect_error());
+exit();
+}
+else {
+echo "Success";
+}
+$link->real_query("SELECT * FROM Table WHERE email = '$email'");
+$res = $link->use_result();
+echo "Result set order.\n";
+while ($row = $res->fetch_assoc()) {
+echo "<img src =\" " . $row['raws3url'] . "\" /><img src =\"" . $row['finisheds3url'] . "\"/>";
+echo $row['id'] . "email: " . $row['email'];
+}
+$link->close();
+?>
+</div>
+</body>
+</html>
    
