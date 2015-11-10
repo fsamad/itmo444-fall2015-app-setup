@@ -12,7 +12,7 @@ $result = $rds->describeDBInstances([
 
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 print "============\n". $endpoint . "================\n";
-$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","3306") or die("Error " . mysqli_error($link)); 
+$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link)); 
 echo "Here is the result: " . $link;
 $sql = "CREATE TABLE Table 
 (
@@ -24,7 +24,7 @@ file VARCHAR(256),
 raws3url VARCHAR(256),
 finisheds3url VARCHAR(256),
 state TINYINT(3),
-date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  
+datetime TIMESTAMP   
 )";
 
 shell-exec("chmod 600 setup.php");
