@@ -17,12 +17,12 @@ echo "Here is the result: " . $link;
 $sql = "CREATE TABLE Table 
 (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-uname VARCHAR(20),
+name VARCHAR(20),
 email VARCHAR(20),
 phone VARCHAR(20), 
+file VARCHAR(256),
 raws3url VARCHAR(256),
 finisheds3url VARCHAR(256),
-jpgfilename VARCHAR(256),
 state TINYINT(3),
 date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  
 )";
