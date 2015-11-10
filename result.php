@@ -6,7 +6,7 @@ session_start();
 
 echo $_POST['email'];
 $uploaddir = '/tmp/';
-$uploadfile = $uploaddir . basename($_FILES['userfile']['name']);
+$uploadfile = $uploaddir . basename($_FILES['file']['name']);
 echo '<pre>';
 if (move_uploaded_file($_FILES['userfile']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
@@ -56,18 +56,18 @@ else {
 echo "Success";
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO Table (uname, email,phone,jpgfilename,s3rawurl,s3finishedurl,state,date) VALUES (?,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO Table (name, email,phone,file,s3rawurl,s3finishedurl,state,date) VALUES (?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
-$uname = $_POST['uname'];
+$name = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
+$file = basename($_FILES['file']['name']);
 $s3rawurl = $url; //  $result['ObjectURL']; from above
-$jpgfilename = basename($_FILES['userfile']['name']);
 $s3finishedurl = "none";
 $state =0;
 $date=0;
-$stmt->bind_param("ssssssis",$uname,$email,$phone,$jpgfilename,$s3rawurl,$s3finishedurl,$state,$date);
+$stmt->bind_param("ssssssis",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$date);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
@@ -78,7 +78,7 @@ $link->real_query("SELECT * FROM Tbale");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
-    echo $row['id'] . " " . $row['uname'] . " " . $row['email']. " " . $row['phone'];
+    echo $row['id'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
 }
 $link->close();
 ?>
