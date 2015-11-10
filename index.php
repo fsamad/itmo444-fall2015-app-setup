@@ -1,73 +1,29 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title> HELLO </title>
+<title>Hello app</title>
 </head>
 <body>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px; width:500px; margin-left:450px">
-<h1 style="color: maroon" align = 'center'> Form </h1>
-<hr> 
-<form align='center' enctype="multipart/form-data" action="result.php" method="POST">
+<!-- The data encoding type, enctype, MUST be specified as below -->
+<form enctype="multipart/form-data" action="result.php" method="POST">
+    <!-- MAX_FILE_SIZE must precede the file input field -->
+    <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+    <!-- Name of input element determines name in $_FILES array -->
+    Send this file: <input name="userfile" type="file"/><br />
+Enter Email of user: <input type="email" name="useremail"><br />
+Enter Phone of user (1-XXX-XXX-XXXX): <input type="phone" name="phone">
 
-<div class="form-group">
-<label for="file" class="col-sm-2 control-label" > Send this file: </label>
-<div class="col-sm-10">
-<input type="file" class="form-control" id="file" name="file" />
-</br> </br>
 
-<div class="form-group">
-<label for="name" class="col-sm-2 control-label" > Your name: </label>
-<div class="col-sm-10"> 
-<input type="text" class="form-control" id="name" name="name" placeholder="User's name" />
-</div> </div> 
-</br>
-
-<div class="form-group">
-<label for="email" class="col-sm-2 control-label"> Your Email: </label>
-<div class="col-sm-10">
-<input type="email" class="form-control" id="email" name="email" placeholder="user's Email Address" />
-</div> </div>
-</br>
-
-<div class="form-group">
-<label for="phone" class="col-sm-2 control-label"> Your Telephone number </label>
-<div class="col-sm-10">
-<input type="phone" class="form-control" id="phone" name="phone" placeholder="User's Phone number" />
-</div> </div> 
-</br> </br>
-
-<div class="form-group">
-<div class="col-sm-10 col-sm-offser-2">
-<input type="submit" id="submit" name="submit" value="Send File" class="btn btn-primary"/>
-</br> </br>
-</div> </div> 
-
-</div> 
-</div>
-</div>
+<input type="submit" value="Submit" />
 </form>
 
-<div id="form" class="container" style="border-style: solid; border-color: #003333; border-width:25px;width:500px; margin-left:450px">
-<form align='center' enctype="mutlipart/form-data" action="gallery.php" method="POST">
-<h1 style="color: maroon" align = 'center'>Enter The User's Email for the gallery to browse</h1> 
-<hr>
-<div class="form-group">
-<label for="email" class="col-sm-2 control-label"> Your Email: </label>
-<div class="col-sm-10">
-<input type="text" class="form-control" id="email" name="email" placeholder="user's Email Address" />
-</div> </div>
+//<form enctype="multipart/form-data" action="gallery.php" method="POST">
+    
+//Enter Email of user for gallery to browse: <input type="email" name="email">
+//<input type="submit" value="Load Gallery" />
+//</form>
 
-</br> </br>
-<div class="form-group">
-<div class="col-sm-10 col-sm-offser-2">
-<input type="submit" id="submit" name="submit" value="Load Gallery" class="btn btn-primary"/>
-</br> </br>
-</div> </div>
-
-</form>
 </body>
 </html>
-
 
