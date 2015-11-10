@@ -63,7 +63,7 @@ $file = basename($_FILES['file']['name']);
 $s3finishedurl = "none";
 $state =0;
 $datetime=0;
-$stmt->bind_param("ssssssis",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$datetime);
+$stmt->bind_param("ssssssii",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$datetime);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
