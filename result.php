@@ -45,7 +45,7 @@ $result = $rds->describeDBInstances([
 $endpoint = $result['DBInstances']['Endpoint']['Address']
     echo "============\n". $endpoint . "================";^M
 //echo "begin database";^M
-$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","users") or die("Error " . mysqli_error($link));
+$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
@@ -56,7 +56,7 @@ else {
 echo "Success";
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO Table (name, email,phone,file,s3rawurl,s3finishedurl,state,date) VALUES (?,?,?,?,?,?,?,?)"))) {
+if (!($stmt = $link->prepare("INSERT INTO Table (name, email,phone,file,s3rawurl,s3finishedurl,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $name = $_POST['name'];
@@ -66,8 +66,8 @@ $file = basename($_FILES['file']['name']);
 $s3rawurl = $url; //  $result['ObjectURL']; from above
 $s3finishedurl = "none";
 $state =0;
-$date=0;
-$stmt->bind_param("ssssssis",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$date);
+$datetime=0;
+$stmt->bind_param("ssssssis",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$datetime);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
