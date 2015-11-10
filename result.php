@@ -43,7 +43,7 @@ $rds = new Aws\Rds\RdsClient([
 $result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'mp1-fabdelsa',
 ]);
-$endpoint = $result['DBInstances']['Endpoint']['Address']
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address']
     echo "============\n". $endpoint . "================";^M
 //echo "begin database";^M
 $link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link));
