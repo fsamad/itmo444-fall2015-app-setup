@@ -14,7 +14,7 @@ $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 print "============\n". $endpoint . "================\n";
 $link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","3306") or die("Error " . mysqli_error($link)); 
 echo "Here is the result: " . $link;
-$sql = "CREATE TABLE User 
+$sql = "CREATE TABLE Table 
 (
 ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 uname VARCHAR(20),
