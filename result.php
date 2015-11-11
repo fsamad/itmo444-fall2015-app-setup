@@ -44,7 +44,7 @@ $result = $rds->describeDBInstances([
     'DBInstanceIdentifier' => 'mp1-fabdelsa',
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address']
-    echo "============\n". $endpoint . "================";^M
+    echo "============\n". $endpoint . "================";
 //echo "begin database";^M
 $link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link));
 /* check connection */
