@@ -1,12 +1,11 @@
 <?php
-
-//Starting the session 
 session_start();
-// In PHP versions earlier than 4.1.0, $HTTP_POST_FILES should be used instead
-// of $_FILES
-
-
-echo $_POST['email'];
+$uname = $_POST['name'];
+$email = $_POST['email'];
+$phone = $_POST['phone'];
+$allowed =  array('gif','png' ,'jpg');
+$filename = $_FILES['file']['name'];
+date_default_timezone_set('America/Chicago');
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['file']['name']);
 echo '<pre>';
@@ -15,25 +14,30 @@ if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
 } else {
     echo "Possible file upload attack!\n";
 }
-echo 'Here is some more debugging info:';
-print_r($_FILES);
-print "</pre>";
 require 'vendor/autoload.php';
+#use Aws\S3\S3Client;
+#$client = S3Client::factory();
 $s3 = new Aws\S3\S3Client([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
 $bucket = uniqid("php-fabdelsa-",false);
-# AWS PHP SDK version 3 create bucket
+//createing a bucket
 $result = $s3->createBucket([
     'ACL' => 'public-read',
     'Bucket' => $bucket
 ]);
+//wait until bucket exists
+$s3->waitUntil('BucketExists',[
+        'Bucket' => $bucket
+]);
+//uploading a file
 $result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
-   'Key' => $uploadfile
-]);  
+   'Key' => $bucket,
+   'SourceFile' => $uploadfile
+]);
 $url = $result['ObjectURL'];
 echo $url;
 $rds = new Aws\Rds\RdsClient([
@@ -41,40 +45,41 @@ $rds = new Aws\Rds\RdsClient([
     'region'  => 'us-east-1'
 ]);
 $result = $rds->describeDBInstances([
-    'DBInstanceIdentifier' => 'mp1-fabdelsa',
+    'DBInstanceIdentifier' => 'fabdelsa-mp1'
 ]);
-$endpoint = $result['DBInstances'][0]['Endpoint']['Address']
-    echo "============\n". $endpoint . "================";
-//echo "begin database";^M
-$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link));
+$endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+//echo "begin database";
+$link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah",3306) or die("Error " . mysqli_error($link));
 /* check connection */
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
-if (!($stmt = $link->prepare("INSERT INTO Table (name, email,phone,file,s3rawurl,s3finishedurl,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))) {
-    echo "Prepare failed: (" . $link->errno . ") " . $link->error;
+/* Prepared statement, stage 1: prepare */
+if (!($stmt = $link->prepare("INSERT INTO users(name,email,phone,file,raws3url,finisheds3url,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))){
+ echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
-$name = $_POST['name'];
+$uname = $_POST['name'];
 $email = $_POST['email'];
+$_SESSION["email"] = $email;
 $phone = $_POST['phone'];
-$s3rawurl = $url; //  $result['ObjectURL']; from above
-$file = basename($_FILES['file']['name']);
-$s3finishedurl = "none";
+$s3url = $url; //  $result['ObjectURL']; from above
+$filename = basename($_FILES['file']['name']);
+$fs3url = "none";
 $state =0;
-$datetime=0;
-$stmt->bind_param("ssssssii",$name,$email,$phone,$file,$s3rawurl,$s3finishedurl,$state,$datetime);
+$date = date("d M Y - h:i:s A");
+$stmt->bind_param("ssssssis",$uname,$email,$phone,$filename,$s3url,$fs3url,$status,$date);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
 printf("%d Row inserted.\n", $stmt->affected_rows);
 /* explicit close recommended */
 $stmt->close();
-$link->real_query("SELECT * FROM Table");
+$link->real_query("SELECT * FROM users");
 $res = $link->use_result();
 echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
-    echo $row['id'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
+    echo $row['ID'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
 }
 $link->close();
-?>
+header("Location: gallery.php");
