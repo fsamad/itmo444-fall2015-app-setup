@@ -3,6 +3,9 @@ session_start();
 $uname = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
+$subscribe = $_POST['subscribe'];
+echo $subscribe;
+$subs = 0;
 $allowed =  array('gif','png' ,'jpg');
 $filename = $_FILES['file']['name'];
 date_default_timezone_set('America/Chicago');
@@ -56,7 +59,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 /* Prepared statement, stage 1: prepare */
-if (!($stmt = $link->prepare("INSERT INTO users(name,email,phone,file,raws3url,finisheds3url,state,datetime) VALUES (?,?,?,?,?,?,?,?)"))){
+if (!($stmt = $link->prepare("INSERT INTO users(name,email,phone,file,raws3url,finisheds3url,state,datetime,subscribe) VALUES (?,?,?,?,?,?,?,?,?)"))){
  echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
 $uname = $_POST['name'];
@@ -68,7 +71,12 @@ $filename = basename($_FILES['file']['name']);
 $fs3url = "none";
 $state =0;
 $date = date("d M Y - h:i:s A");
-$stmt->bind_param("ssssssis",$uname,$email,$phone,$filename,$s3url,$fs3url,$status,$date);
+$sns = new Aws\Sns\SnsClient([
+'version' => 'latest',
+'region' => 'us-east-1'
+]);
+
+$stmt->bind_param("ssssssisi",$uname,$email,$phone,$filename,$s3url,$fs3url,$status,$date,$subs);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
 }
