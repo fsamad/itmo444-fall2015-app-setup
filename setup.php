@@ -36,5 +36,12 @@ $result = $sns->createTopic([
 'Name' => 'mp2',
 ]);
 
+#adding the topic attributes
+'AttributeName'=>'DisplayName',
+'AttributeValue'=>'mp2',
+'TopicArn'=>$result['TopicArn']
+]);
+
+header("Location: index.php");
 
 ?>
