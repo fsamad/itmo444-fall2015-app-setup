@@ -102,6 +102,12 @@ while ($row = $res->fetch_assoc()) {
     echo $row['ID'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
 }
 
-$response = $sns
+$response = $sns->publish([
+'TopicArn'=>'arn:aws:sns:us-east-1:697950492524:mp2',
+'Message'=>'Hello user, the image was successfuly added to your gallery'
+]);
+
 $link->close();
 header("Location: gallery.php");
+
+?>
