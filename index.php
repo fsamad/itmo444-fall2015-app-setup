@@ -63,6 +63,7 @@
 </div> </div>
 
 </br> </br>
+<label for="subscribe" class="col-sm-2 control-label"> Do you wish to subscribe? </label>
 <div align='center'>
 <select name="subscribe">
 <option value="option1"> Subscribe </option>
