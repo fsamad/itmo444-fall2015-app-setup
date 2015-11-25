@@ -70,6 +70,7 @@
 <option value="oprtion3"> I don't want to subscribe </option>
 </select>
 </div>
+</br>
 <div class="form-group">
 
 <div class="col-sm-10 col-sm-offser-2">
