@@ -63,8 +63,13 @@
 </div> </div>
 
 </br> </br>
-
-
+<div align='center'>
+<select name="subscribe">
+<option value="option1"> Subscribe </option>
+<option value="option2"> Already subscribed </option>
+<option value="oprtion3"> I don't want to subscribe </option>
+</select>
+</div>
 <div class="form-group">
 
 <div class="col-sm-10 col-sm-offser-2">
@@ -120,6 +125,4 @@
 </body>
 
 </html>
-
-
 
