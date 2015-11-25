@@ -76,6 +76,18 @@ $sns = new Aws\Sns\SnsClient([
 'region' => 'us-east-1'
 ]);
 
+#subscribe options
+if ($subscribe == "option1" || $subscribe == "option2"){
+$subc = 1;
+if ($subscribe == "option1"){
+$result = $sns->subscribe([
+'Endpoint'=>$phone,
+'Protocol'=> 'sms',
+'TopicArn'=> 'arn:aws:sns:us-east-1:697950492524:mp2'
+]);
+}
+}
+
 $stmt->bind_param("ssssssisi",$uname,$email,$phone,$filename,$s3url,$fs3url,$status,$date,$subs);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -89,5 +101,7 @@ echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
     echo $row['ID'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
 }
+
+$response = $sns
 $link->close();
 header("Location: gallery.php");
