@@ -37,8 +37,8 @@ $result = $sns->createTopic([
 ]);
 
 #adding the topic attributes
-'AttributeName'=>'DisplayName',
-'AttributeValue'=>'mp2',
+'AttributeName' => 'DisplayName',
+'AttributeValue' => 'mp2',
 'TopicArn'=>$result['TopicArn']
 ]);
 
