@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'vendor/autoload.php';
 $uname = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
@@ -17,14 +18,6 @@ $uploadfile = $uploaddir . basename($_FILES['file']['name']);
 $uploadthumb = '/tmp/thumb/';
 $uploadfilethumb = $uploadthumb . basename($_FILES['file']['name']);
 
-
-echo '<pre>';
-if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile) && move_uploaded_file($_FILES['file']['tmp_name'], $uploadfilethumb)) {
-    echo "File is valid, and was successfully uploaded.\n";
-} else {
-    echo "Possible file upload attack!\n";
-}
-require 'vendor/autoload.php';
 
 var_dump($filename);
 $imagick = new Imagick(realpath($uploaddir));
