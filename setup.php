@@ -24,7 +24,6 @@ subscibe TINYINT(2),
 datetime VARCHAR(256)  
 )";
 $link->query($sql);
-shell-exec("chmod 600 setup.php");
 
 #creating the sns topic
 $sns = new Aws\Sns\SnsClient([
@@ -43,6 +42,5 @@ $topicAttributes = $sns->setTopicAttributes([
 'TopicArn' => $result['TopicArn']
 ]);
 
-header("Location: index.php");
 
 ?>
