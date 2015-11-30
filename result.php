@@ -56,6 +56,18 @@ $result = $s3->putObject([
 ]);
 $url = $result['ObjectURL'];
 echo $url;
+
+//uploading the thumbnail image
+$result = $s3->putObject([
+    'ACL' => 'public-read',
+    'Bucket' => $bucket,
+   'Key' => $bucket,
+   'SourceFile' => $uploadthumb
+]);
+$thumburl = $result['ObjectURL'];
+echo $thumburl;
+
+//creating the rds client
 $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
@@ -81,7 +93,7 @@ $_SESSION["email"] = $email;
 $phone = $_POST['phone'];
 $s3url = $url; //  $result['ObjectURL']; from above
 $filename = basename($_FILES['file']['name']);
-$fs3url = "none";
+$fs3url = $thumburl;
 $state =0;
 $date = date("d M Y - h:i:s A");
 $sns = new Aws\Sns\SnsClient([
