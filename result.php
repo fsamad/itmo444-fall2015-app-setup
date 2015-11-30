@@ -15,11 +15,11 @@ $uploadfile = $uploaddir . basename($_FILES['file']['name']);
 
 #the upload thumb 
 $uploadthumb = '/tmp/thumb/';
-$uploadfile = $uploadthumb . basename($_FILES['file']['name']);
+$uploadfilethumb = $uploadthumb . basename($_FILES['file']['name']);
 
 
 echo '<pre>';
-if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile) && move_uploaded_file($_FILES['file']['tmp_name'], $uploadfilethumb)) {
     echo "File is valid, and was successfully uploaded.\n";
 } else {
     echo "Possible file upload attack!\n";
