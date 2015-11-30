@@ -1,5 +1,6 @@
 <?php
 session_start();
+require 'vendor/autoload.php';
 $uname = $_POST['name'];
 $email = $_POST['email'];
 $phone = $_POST['phone'];
@@ -9,15 +10,27 @@ $subs = 0;
 $allowed =  array('gif','png' ,'jpg');
 $filename = $_FILES['file']['name'];
 date_default_timezone_set('America/Chicago');
+
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['file']['name']);
+
+#the upload thumb 
+$uploadthumb = '/tmp/thumb/';
+$uploadfile = $uploadthumb . basename($_FILES['file']['name']);
+
+
 echo '<pre>';
 if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
     echo "File is valid, and was successfully uploaded.\n";
 } else {
     echo "Possible file upload attack!\n";
 }
-require 'vendor/autoload.php';
+
+var_dump($filename);
+$imagick = new Imagick(realpath($uploaddir));
+$imagick -> thumbnailImage(100, 100, true, true);
+$imagick -> writeImage($uploadthumb);
+
 #use Aws\S3\S3Client;
 #$client = S3Client::factory();
 $s3 = new Aws\S3\S3Client([
