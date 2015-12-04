@@ -13,17 +13,36 @@ date_default_timezone_set('America/Chicago');
 
 $uploaddir = '/tmp/';
 $uploadfile = $uploaddir . basename($_FILES['file']['name']);
-
-#the upload thumb 
-$uploadthumb = '/tmp/thumb/';
-$uploadfilethumb = $uploadthumb . basename($_FILES['file']['name']);
-
-
-var_dump($filename);
-$imagick = new Imagick(realpath($uploaddir));
-$imagick -> thumbnailImage(100, 100, true, true);
-$imagick -> writeImage($uploadthumb);
-
+if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)) {
+    echo "File is valid, and was successfully uploaded.\n";
+} else {
+    echo "Possible file upload attack!\n";
+}
+$image = @file_get_contents($uploadfile);
+echo "got image contents";
+if($image) {
+    $im = new Imagick();
+    echo $im;
+    $im->readImageBlob($image);
+    $im->setImageFormat("png24");
+    $geo=$im->getImageGeometry();
+    $width=$geo['width'];
+    $height=$geo['height'];
+        echo $height. $width;
+    if($width > $height)
+    {
+        $scale = ($width > 200) ? 200/$width : 1;
+    }
+    else
+    {
+        $scale = ($height > 200) ? 200/$height : 1;
+    }
+    $newWidth = $scale*$width;
+    $newHeight = $scale*$height;
+ echo $newWidth.$newHeight;
+    $im->setImageCompressionQuality(85);
+    $im->resizeImage($newWidth,$newHeight,Imagick::FILTER_LANCZOS,1.1);
+}
 #use Aws\S3\S3Client;
 #$client = S3Client::factory();
 $s3 = new Aws\S3\S3Client([
@@ -50,12 +69,14 @@ $result = $s3->putObject([
 $url = $result['ObjectURL'];
 echo $url;
 
+unlink($uploadfile);
+$im->writeImage($uploadfile);
 //uploading the thumbnail image
 $result = $s3->putObject([
     'ACL' => 'public-read',
     'Bucket' => $bucket,
    'Key' => $bucket,
-   'SourceFile' => $uploadthumb
+   'SourceFile' => $uploadfile
 ]);
 $thumburl = $result['ObjectURL'];
 echo $thumburl;
@@ -80,6 +101,8 @@ if (mysqli_connect_errno()) {
 if (!($stmt = $link->prepare("INSERT INTO users(name,email,phone,file,raws3url,finisheds3url,state,datetime,subscribe) VALUES (?,?,?,?,?,?,?,?,?)"))){
  echo "Prepare failed: (" . $link->errno . ") " . $link->error;
 }
+
+echo "done";
 $uname = $_POST['name'];
 $email = $_POST['email'];
 $_SESSION["email"] = $email;
@@ -93,19 +116,19 @@ $sns = new Aws\Sns\SnsClient([
 'version' => 'latest',
 'region' => 'us-east-1'
 ]);
-
+echo "2222";
 #subscribe options
 if ($subscribe == "option1" || $subscribe == "option2"){
-$subc = 1;
-if ($subscribe == "option1"){
-$result = $sns->subscribe([
-'Endpoint'=>$phone,
-'Protocol'=> 'sms',
-'TopicArn'=> 'arn:aws:sns:us-east-1:697950492524:mp2'
+$subs = 1;
+echo "if";
+if ($subscribe == "option1"){;
+$result = $sns-> subscribe([
+        'Endpoint'=> $phone,
+        'Protocol'=> 'sms',
+        'TopicArn'=> 'arn:aws:sns:us-east-1:697950492524:mp2-1'
 ]);
 }
 }
-
 $stmt->bind_param("ssssssisi",$uname,$email,$phone,$filename,$s3url,$fs3url,$status,$date,$subs);
 if (!$stmt->execute()) {
     echo "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -119,13 +142,13 @@ echo "Result set order...\n";
 while ($row = $res->fetch_assoc()) {
     echo $row['ID'] . " " . $row['name'] . " " . $row['email']. " " . $row['phone'];
 }
-
+echo "3333333";
 $response = $sns->publish([
-'TopicArn'=>'arn:aws:sns:us-east-1:697950492524:mp2',
+'TopicArn'=>'arn:aws:sns:us-east-1:697950492524:mp2-1',
 'Message'=>'Hello user, the image was successfuly added to your gallery'
 ]);
-
 $link->close();
 header("Location: gallery.php");
 
 ?>
+
