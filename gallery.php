@@ -28,13 +28,14 @@ printf("Connection faild: %s\n", mysqli_connect_error());
 exit();
 }
 $sql = "SELECT * FROM users WHERE email = '$email'";
+
 $link->real_query($sql);
 if ($result = $link->use_result()) {
             while ($row = $result->fetch_assoc()) {
 if ($row['finisheds3url'])
 {
 echo "<h3> This is the raw image </h3><img src =\" " . $row['raws3url'] . "\" height='200' width='200' /> </h3>";
-echo "<h3> This is the rendered image<img src =\" " . $row['finisheds3url'] . "\" height='200' width='200' /> </h3>";
+echo "<h3> This is the rendered image<img src =\" " . $row['finisheds3url'] . "\" height='100' width='100' /> </h3>";
 
 }else{
 echo "<img src =\" " . $row['raws3url'] . "\" height='200' width='200' />";
