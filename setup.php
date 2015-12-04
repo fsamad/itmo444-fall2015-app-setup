@@ -4,7 +4,10 @@ $rds = new Aws\Rds\RdsClient([
     'version' => 'latest',
     'region'  => 'us-east-1'
 ]);
-$result = $rds->describeDBInstances([
+
+$result = $rds->waitUntil('DBInstanceAvailable',['DBInstanceIdentifier' => 'fabdelsa-mp1',]);
+
+$result = $rds->describeDBInstances([ 
     'DBInstanceIdentifier' => 'fabdelsa-mp1',
 ]);
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
@@ -12,17 +15,18 @@ print "============\n". $endpoint . "================\n";
 $link = mysqli_connect($endpoint,"fabdelsa","fabdelsa","farah") or die("Error " . mysqli_error($link));
 $sql = "CREATE TABLE users 
 (
-ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 name VARCHAR(20),
-email VARCHAR(20),
+email VARCHAR(20), 
 phone VARCHAR(20), 
 file VARCHAR(256),
 raws3url VARCHAR(256),
 finisheds3url VARCHAR(256),
 state TINYINT(3),
-subscibe TINYINT(2),
+subscribe TINYINT(2),
 datetime VARCHAR(256)  
 )";
+
 $link->query($sql);
 
 #creating the sns topic
@@ -32,7 +36,7 @@ $sns = new Aws\Sns\SnsClient([
 ]);
 
 $result = $sns->createTopic([
-'Name' => 'mp2',
+'Name' => 'mp2-1',
 ]);
 
 #adding the topic attributes
@@ -44,3 +48,4 @@ $topicAttributes = $sns->setTopicAttributes([
 
 
 ?>
+
