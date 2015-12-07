@@ -59,6 +59,22 @@ $result = $s3->createBucket([
 $s3->waitUntil('BucketExists',[
         'Bucket' => $bucket
 ]);
+
+//experation for the first bucket 
+
+$result = $s3->putBucketLifecycleConfiguration(array(
+        'Bucket' => $bucket,
+        'LifecycleConfiguration' => array(
+        'Rules' => array(
+                        array(
+                                'Expiration' => array('Days' => 1),
+                                'Prefix' => "",
+                                'Status' => 'Enabled'
+                        )
+        ))
+));
+
+
 //uploading a file
 $result = $s3->putObject([
     'ACL' => 'public-read',
